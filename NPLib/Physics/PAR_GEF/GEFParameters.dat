@@ -1,0 +1,96 @@
+  Emax_valid		  100 		 // Maximum allowed excitation energy  
+  Eexc_min_multi 	  3             // Threshold for calc. of multi-chance fission
+  _Delta_S0 		  0          	// Shell effect for SL, for individual systems  
+  EOscale 		  1.0   	// Scaling factor for even-odd structure in yields  
+  Emode 		  1       	// 0: E over BF_B  1: E over gs  2: E_neutron  12: E_proton  
+  D_Par_Fac 		  1           	// Scales the variation of perturbed parameters
+  _P_DZ_Mean_S1 	  -0.3 
+  _P_DZ_Mean_S2 	  -0.4   
+  _P_DZ_Mean_S3 	  0.2 		// Shift of mean Z of Mode 3  
+  _P_DZ_Mean_S4 	  0    		// Shell for structure at A around 190   
+  ZC_Mode_4L 		  44.4 
+  _P_Z_Curv_S1 		  0.38 
+  P_Z_Curvmod_S1 	  1.75 		// Scales energy-dependent shift      
+  _P_Z_Curv_S2 		  0.098 
+  _S2leftmod 		  0.75 		// Asymmetry in diffuseness of S2 mass peak   
+  P_Z_Curvmod_S2 	  10    	// Scales energy-dependent shift  
+  _P_A_Width_S2 	  11.5   	// A width of Mode 2 (box)
+  P_Cut_S2 		  0         	// Divide S2 into two modes, S2a and S2b  
+  _P_Z_Curv_S3 	       	  0.09 
+  P_Z_Curvmod_S3 	  10 		// Scales energy-dependent shift  
+  P_Z_Curv_SL4 		  0.07 
+  P_Z_Sigma_SL4 	  1.15     
+  _P_Z_Curv_S4 		  0.05 
+  P_Z_Curvmod_S4 	  10 		// Scales energy-dependent shift  
+  _P_Shell_S1 		  -3.0    	// Shell effect for Mode 1 (S1)  
+  _P_Shell_S2 		  -4.4     	// Shell effect for Mode 2 (S2)  
+  _P_Shell_S3 		  -7.2     	// Shell effect for Mode 3 (SA)  
+  P_Shell_SL4 		  -0.4 
+  _P_Shell_S4 		  -1.0 		// Shell effect for Mode 4  
+  P_S4_NZmod 		  -0.06     	// Variation of S4 shell with N/Z (reference: 180Hg)  
+  PZ_S3_olap_pos 	  39.7     	// Pos. of S3 shell in light fragment (in Z)  
+  PZ_S3_olap_curv 	  0.0045 
+  ETHRESHSUPPS1 	  10.85    
+  ESIGSUPPS1 		  1.0        
+  Level_S11 		  1.6 
+  Shell_fading 		  50 		// fading of shell effect with E*  
+  _T_low_S1 		  0.31   
+  _T_low_S2 		  0.31 		// Slope parameter for tunneling  
+  _T_low_S3 		  0.31        	// Slope parameter for tunneling  
+  _T_low_S4 		  0.31       	// Slope parameter for tunneling  
+  _T_low_SL 		  0.31       	// Slope parameter for tunneling  
+  T_low_S11 		  0.36      	// Slope parameter for tunneling  
+  _P_att_pol 		  2.5 
+  P_att_pol2  		  0 
+  P_att_pol3 		  0 
+  _P_att_rel 		  1 		// Relative portion of attenuation  
+  dE_Defo_S1 		  -2.8     	// Deformation energy expense for Mode 1  
+  dE_Defo_S2 		  0        	// Deformation energy expense for Mode 2  
+  dE_Defo_S3 		  0        	// Deformation energy expense for Mode 3  
+  dE_Defo_S4 		  0        	// Deformation energy expense for Mode 4  
+  betaL0 		  27.6 
+  betaL1 		  0.67 
+  betaH0 		  46.24 	// Offset for deformation of heavy fragment  
+  betaH1 		  0.60 
+  kappa 		  0 		// N/Z dedendence of A-asym. potential  
+  TCOLLFRAC 		  0.04      	// Tcoll per energy gain from saddle to scission  
+  ECOLLFRAC 		  0.055      	// Fraction of pot. energy gain from saddle to scission, going into coll. excitations  
+  TFCOLL 		  0.034   
+  TCOLLMIN 		  0.12 
+  ESHIFTSASCI_intr 	  -67 		// Shift of saddle-scission energy   
+  ESHIFTSASCI_coll 	  -90    	// Shift of saddle-scission energy  
+  EDISSFRAC 		  0.35 
+  Epot_shift 		  0 
+  SIGDEFO 		  0.165   
+  SIGDEFO_0 		  0.165 
+  SIGDEFO_slope 	  0 
+  SIGENECK 		  5.0 		// Width of TXE by fluctuation of neck length  
+  EexcSIGrel 		  0.7 
+  DNECK 		  1 		// Tip distance at scission / fm  
+  FTRUNC50 		  1          	// Truncation near Z   50  
+  ZTRUNC50 		  50         	// Z value for truncation  
+  FTRUNC28 		  0.56       	// Truncation near Z   28  
+  ZTRUNC28 		  30.5       	// Z value for truncation  
+  ZMAX_S2 		  60          	// Maximum Z of S2 channel in light fragment  
+  NTRANSFEREO 		  6       	// Steps for E sorting for even-odd effect  
+  NTRANSFERE 		  12       	// Steps for E sorting for energy division  
+  Csort 		  0.5           // Smoothing of energy sorting  
+  PZ_EO_symm 		  2.6      	// Even-odd effect in Z at symmetry  
+  PN_EO_Symm 		  2.6      	// Even-odd effect in N at symmetry  
+  R_EO_THRESH 		  0.398    	// Threshold for asymmetry-driven even-odd effect 
+  R_EO_SIGMA 		  2.0 
+  R_EO_Max 		  0.6     
+  _POLARadd 		  0.35 		// Offset for enhanced polarization  
+  POLARfac 		  1   		// Enhancement of polarization of liqu. drop  
+  T_POL_RED 		  0.01   	// Reduction of temperature for sigma(Z)  
+  _HOMPOL 		  1.3   	// hbar omega of polarization oscillation    
+  ZPOL1 		  0            	// Extra charge polarization of S1  
+  P_n_x 		  0      	// Enhanced inverse neutron x section  
+  Tscale 		  1 
+  Econd 		  2    
+  T_orbital 		  0 		// From orbital ang. momentum  
+  _Jscaling 		  1.0    	// General scaling of fragment angular momenta  
+  Spin_odd 		  0.4   	// RMS Spin enhancement for odd Z   
+  Esort_extend 		  1.5   	// Extension of energy range for E-sorting  
+  Esort_slope 		  0.04   	// Onset of E-sorting around symmetry       
+  Esort_slope_S0 	  0.2   	// Onset of E-sorting around symmetry for S0 channel       

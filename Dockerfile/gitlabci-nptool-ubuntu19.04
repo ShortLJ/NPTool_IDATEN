@@ -1,0 +1,38 @@
+# to build use
+#  > docker build -t gitlab-registry.in2p3.fr/np/nptool:gitlabci-nptool-ubuntu19.04 -f gitlabci-nptool-ubuntu19.04 .
+# to push use
+#  > docker push gitlab-registry.in2p3.fr/np/nptool:gitlabci-nptool-ubuntu19.04
+FROM ubuntu:19.04
+# proxy for lpccaen
+ENV http_proxy http://caeproxy.in2p3.fr:3128
+ENV https_proxy http://caeproxy.in2p3.fr:3128
+ENV ftp_proxy http://caeproxy.in2p3.fr:3128
+ENV ssl_proxy http://caeproxy.in2p3.fr:3128
+RUN apt-get -y update
+
+# general necessities
+RUN apt-get install -y cmake ninja-build gcc g++ wget git libexpat1-dev libxerces-c-dev libsm-dev libxft2-dev libxpm-dev libxext-dev libtiff-dev libpython-dev python-dev python ; apt-get clean
+
+# getting the needed file
+RUN wget https://root.cern/download/root_v6.18.02.source.tar.gz
+RUN wget http://cern.ch/geant4-data/releases/geant4.10.05.p01.tar.gz
+
+# getting root
+RUN tar -xf root_v6.18.02.source.tar.gz -C root --strip-components 1 ; rm -f root_v6.18.02.source.tar.gz
+RUN mkdir root_build root_install
+RUN /bin/bash -c "cd root_build ; cmake -GNinja -DCMAKE_INSTALL_PREFIX=/root_install -Dpython=off /root"
+RUN /bin/bash -c "cd root_build ; ninja install;ninja clean; cd .. ; rm -rf root_build ; rm -rf root"
+RUN echo "source root_install/bin/thisroot.sh" > .bashrc
+
+# getting geant4
+RUN mkdir geant4 geant4_build geant4_install
+RUN tar -xf geant4.10.05.p01.tar.gz -C geant4 --strip-components 1 ; rm -f geant4.10.05.p01.tar.gz
+RUN /bin/bash -c "cd geant4_build ; cmake -GNinja -DCMAKE_INSTALL_PREFIX=/geant4_install -DGEANT4_INSTALL_DATA=ON -DGEANT4_USE_GDML=ON /geant4"
+RUN /bin/bash -c "cd geant4_build ; ninja install;ninja clean; cd .. ; rm -rf geant4_build ; rm -rf geant4"
+RUN echo "source geant4_install/share/Geant4-10.5.1/geant4make/geant4make.sh" >> .bashrc 
+
+# creating a root folder to act as home
+RUN mkdir root
+
+# starting bash prompt
+CMD /bin/bash -rcfile .bashrc

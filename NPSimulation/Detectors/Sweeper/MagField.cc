@@ -1,0 +1,227 @@
+#include "MagField.hh"
+
+
+#include "G4RunManager.hh"
+
+#include <fstream>
+#include <iostream>
+
+#include "TMath.h"
+
+using namespace CLHEP;
+
+MagField::MagField()
+  :IsLoaded(false), 
+   fMagAngle(0),
+   fMagFieldFile(""),
+   fFieldFactor(1.0)
+{}
+////////////////////////////////////////////////////////////////////////
+
+MagField::~MagField()
+{}
+
+////////////////////////////////////////////////////////////////////////
+
+void MagField::LoadMagneticField(TString filename)
+{
+  TString magfile = filename;
+  fMagFieldFile = filename;
+
+  std::cout<<"Start loading magnetic field data"<<std::endl;
+
+  TString magbinfile = magfile.ReplaceAll("csv", "bin"); 
+  
+  if(magfile.EndsWith("bin")){ // check if binary is created
+    
+    std::ifstream magfilebin(Form(magbinfile.Data()),std::ios::in|std::ios::binary);
+    if(magfilebin.is_open()){
+      magfilebin.read((char *)Bx,sizeof(Bx));
+      magfilebin.read((char *)By,sizeof(By));
+      magfilebin.read((char *)Bz,sizeof(Bz));
+      magfilebin.close();
+      std::cout << "succeed to get magnetic field data from: " << magfile.Data() << std::endl;
+    }
+    else{
+      std::cout <<"\x1b[31m"
+		<<"fail to get magnetic field data from: " << magfile.Data() 
+   		<<"\x1b[0m"
+   		<< std::endl;
+      magfilebin.close();
+      return;
+    }
+  }else if(magfile.EndsWith("table")){ // supposed to be ususal ascii file
+    
+    std::ifstream magin(magfile.Data(),std::ios::in);
+    
+    if(!magin.is_open()){
+      std::cout <<"\x1b[31m"
+		<<"fail to get magnetic field data from: " << magfile.Data() 
+		<<"\x1b[0m"
+		<< std::endl;
+      magin.close();
+      return ;
+    }
+    
+    std::cout << "opening: " << magfile.Data() << std::endl;
+    std::ifstream magfin(magfile.Data()); 
+    char buffer[256];
+    for(int i=0;i<1;i++)  magfin.getline(buffer,256);// Header in file
+    
+    G4double v[7];
+    
+    while(magfin>>v[0]>>v[1]>>v[2]>>v[3]>>v[4]>>v[5]>>v[6]){
+
+      std::cout<<v[0] <<" "<< v[1]<<" "<<v[2]<<" "<<v[3]<< " "<< v[4]<<" "<<v[5]<<" "<<v[6]<<std::endl;     
+      
+      Bx[(int)v[0]%45][(int)(v[0]/45)][(int)v[0]%45] = fabs(v[4]) > 0.0001 ? v[4]*kilogauss : 0; // 45 number of points
+      By[(int)v[0]%45][(int)(v[0]/45)][(int)v[0]%45] = fabs(v[5]) > 0.0001 ? v[5]*kilogauss : 0;
+      Bz[(int)v[0]%45][(int)(v[0]/45)][(int)v[0]%45] = fabs(v[6]) > 0.0001 ? v[6]*kilogauss : 0;
+
+
+      std::cout<< (int)v[0]%45 << " "<<(int)(v[0]/45) <<" "<<(int)v[0]%45 <<std::endl;
+      std::cout<<  Bx[(int)v[0]%45][(int)(v[0]/45)][(int)v[0]%45]/kilogauss << " "<<  By[(int)v[0]%45][(int)(v[0]/45)][(int)v[0]%45]/kilogauss << " "<<  Bz[(int)v[0]%45][(int)(v[0]/45)][(int)v[0]%45]/kilogauss<<std::endl;
+    }
+    magfin.close();
+
+    magfile.ReplaceAll("csv", "bin");
+    
+    std::cout << "making new binary file: " << magfile.Data() << std::endl;
+    std::ofstream magout(magfile.Data(),std::ios::out|std::ios::binary);
+    magout.write((char *)Bx,sizeof(Bx));
+    magout.write((char *)By,sizeof(By));
+    magout.write((char *)Bz,sizeof(Bz));
+    magout.close();
+
+  }
+  else {
+    std::cout <<"\x1b[31m"
+	      << "can not identify file type: " << magfile.Data() 
+	      <<"\x1b[0m"
+	      << std::endl;
+  }
+
+  IsLoaded = true;
+  return;
+
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void MagField::GetFieldValue( const G4double Pos_lab[4],
+			       G4double *B_lab     ) const 
+{
+
+  if(!IsLoaded) G4cout << "load the magnetic field map!!" << G4endl;
+  // af[*] is correction for symmetric axis. 
+
+
+  std::cout<<"coordinates in world: "<<Pos_lab[0]<< " "<<Pos_lab[1]<<" "<<Pos_lab[2]<<std::endl;
+
+
+  G4double Pos_map[3] = {Pos_lab[0], Pos_lab[1], Pos_lab[2] - (1500-121.703)*mm }; //mm 121.793mm is the distance between
+                                                                                   //mapper origin and sweeper entrance.
+                                                                                   //1500mm is the z pos of the sweeper entrance
+                                                                                   //with respect to g4 origin
+
+  std::cout<<"coordinates in mapper: "<<Pos_map[0]<< " "<<Pos_map[1]<<" "<<Pos_map[2]<<std::endl;
+
+  //Position with respect to sweeper center of curvature
+  G4double Pos[3] = {-1030*mm-Pos_lab[0], Pos_lab[1], Pos_map[2] - 121.703*mm }; //-1003mm is the x pos of the center of curvature of sweeper
+                                                                                 //-1003m-Pos_map[0] translates x=0 of mapper to x=1003 with respect to center of curvature of the sweeper
+                                                                                 //Pos_map[2]-121.703 translates z=0 of mapper to z=0 of center of curvature of the sweeper 
+                                                                                 //Pos[0] is negative, but sign is not important since we only use it to calculate r
+  
+  std::cout<<"coordinates in sweeper center: "<<Pos[0]<< " "<<Pos[1]<<" "<<Pos[2]<<std::endl;
+
+  G4double x[3], d[3], dsqt[3], mdsq[3];
+  G4int n[3];//index in magnetic field arrays. 0: Bx, 1:By, 2:Bz
+
+  //Radius of particle with respect to sweeper center of curvature
+  G4double r = TMath::Sqrt(Pos[0]*Pos[0]+Pos[2]*Pos[2]);
+  G4double B[3];
+  //std::cout<<r*mm<<" "<<1.83*m<<std::endl;
+  if(r > 1.23*m || r< 0.83*m  || fabs(Pos_lab[1])>50*mm){
+    std::cout<<"rejected"<<std::endl;
+    B_lab[0]=0; B_lab[1]=0; B_lab[2]=0; return;
+  }
+ 
+  ////// TRILINEAR INTERPOLATION
+
+  G4double step[] = {1 ,1, 16.57}; //mm - step in map
+  G4double spoint[] = {-50, 0, 100}; //mm - first entry in map
+  
+  for(int i=0;i<3;i++){
+  
+    n[i] = (int)((Pos_map[2]-spoint[i])/step[i]);
+    d[i] = ((Pos_map[2]-spoint[i])/step[i])-n[i];
+    
+    B[i]=0;
+    //    dsqt[i] = d[i] * d[i];
+    //    mdsq[i] = 1 - d[i] * d[i];
+    if(0 == d[i]){
+      mdsq[i] = 1;
+      dsqt[i] = 0;
+    }
+    else if(1 == d[i]){
+      mdsq[i] = 0;
+      dsqt[i] = 1;
+    }
+    else{
+      // Double_t sum = 1/d[i] + 1/(1.-d[i]);
+      // mdsq[i] = 1/d[i]/sum;
+      // dsqt[i] = 1 - mdsq[i];
+
+      mdsq[i] = 1-d[i];
+      dsqt[i] = d[i];
+    }
+
+  }
+
+  std::cout<<"FIELD: "<<n[0]<<" "<<Bx[n[0]][n[1]][n[2]]/kilogauss<<" "<<n[1]<<" "<<By[n[0]][n[1]][n[2]]/kilogauss<<" "<<n[2]<<" "<<Bz[n[0]][n[1]][n[2]]/kilogauss<<" "<<  Pos_map[2]<<" "<< std::endl;
+
+  B[0] = mdsq[0]*mdsq[1]*mdsq[2]*Bx[n[0]  ][n[1]  ][n[2]  ] +
+         dsqt[0]*mdsq[1]*mdsq[2]*Bx[n[0]+1][n[1]  ][n[2]  ] +
+         mdsq[0]*dsqt[1]*mdsq[2]*Bx[n[0]  ][n[1]+1][n[2]  ] +
+         mdsq[0]*mdsq[1]*dsqt[2]*Bx[n[0]  ][n[1]  ][n[2]+1] +
+         dsqt[0]*dsqt[1]*mdsq[2]*Bx[n[0]+1][n[1]+1][n[2]  ] +
+         dsqt[0]*mdsq[1]*dsqt[2]*Bx[n[0]+1][n[1]  ][n[2]+1] +
+         mdsq[0]*dsqt[1]*dsqt[2]*Bx[n[0]  ][n[1]+1][n[2]+1] +
+         dsqt[0]*dsqt[1]*dsqt[2]*Bx[n[0]+1][n[1]+1][n[2]+1];
+
+  B[1] = mdsq[0]*mdsq[1]*mdsq[2]*By[n[0]  ][n[1]  ][n[2]  ] +
+         dsqt[0]*mdsq[1]*mdsq[2]*By[n[0]+1][n[1]  ][n[2]  ] +
+         mdsq[0]*dsqt[1]*mdsq[2]*By[n[0]  ][n[1]+1][n[2]  ] +
+         mdsq[0]*mdsq[1]*dsqt[2]*By[n[0]  ][n[1]  ][n[2]+1] +
+         dsqt[0]*dsqt[1]*mdsq[2]*By[n[0]+1][n[1]+1][n[2]  ] +
+         dsqt[0]*mdsq[1]*dsqt[2]*By[n[0]+1][n[1]  ][n[2]+1] +
+         mdsq[0]*dsqt[1]*dsqt[2]*By[n[0]  ][n[1]+1][n[2]+1] +
+         dsqt[0]*dsqt[1]*dsqt[2]*By[n[0]+1][n[1]+1][n[2]+1];
+
+  B[2] = mdsq[0]*mdsq[1]*mdsq[2]*Bz[n[0]  ][n[1]  ][n[2]  ] +
+         dsqt[0]*mdsq[1]*mdsq[2]*Bz[n[0]+1][n[1]  ][n[2]  ] +
+         mdsq[0]*dsqt[1]*mdsq[2]*Bz[n[0]  ][n[1]+1][n[2]  ] +
+         mdsq[0]*mdsq[1]*dsqt[2]*Bz[n[0]  ][n[1]  ][n[2]+1] +
+         dsqt[0]*dsqt[1]*mdsq[2]*Bz[n[0]+1][n[1]+1][n[2]  ] +
+         dsqt[0]*mdsq[1]*dsqt[2]*Bz[n[0]+1][n[1]  ][n[2]+1] +
+         mdsq[0]*dsqt[1]*dsqt[2]*Bz[n[0]  ][n[1]+1][n[2]+1] +
+         dsqt[0]*dsqt[1]*dsqt[2]*Bz[n[0]+1][n[1]+1][n[2]+1];
+
+  // B[0] = Bx[n[0]  ][n[1]  ][n[2]  ];
+  // B[1] = By[n[0]  ][n[1]  ][n[2]  ];
+  // B[2] = Bz[n[0]  ][n[1]  ][n[2]  ];
+
+  
+
+  
+  std::cout<<B[0]/kilogauss<<" "<<B[1]/kilogauss<<" "<<B[2]/kilogauss<<std::endl;
+  
+  B_lab[0] = fFieldFactor * B[0];//*cos(fMagAngle/rad)-B[2]*sin(fMagAngle/rad);
+  B_lab[1] = fFieldFactor * B[1];
+  B_lab[2] = fFieldFactor * B[2];//*sin(fMagAngle/rad)+B[2]*cos(fMagAngle/rad);
+
+  std::cout<<B_lab[0]/kilogauss<<" "<<B_lab[1]/kilogauss<<" "<<B_lab[2]/kilogauss<<std::endl;
+  return ;
+}
+
+// -----------------------------------------------------------------

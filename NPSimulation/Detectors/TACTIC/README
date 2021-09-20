@@ -1,0 +1,51 @@
+out.dat contains the latest setp information after the particle in question has traversed the length of a strip (~4mm) for step size of (~0.1mm)
+
+The coloumn headings of out.dat are:
+
+Event ID
+Track ID
+Particle ID (see below for index list)
+Time
+Kinetic Energy
+Ionization Energy Deposit (Accumilated during the particles traversal across the strip length)
+Pad Number
+z Position
+R Position
+Vertex Position
+Vertex Kinetic Energy
+Vertex Theta
+Track Length
+
+(If there has not been a vertex during the step then the vertex information given is taken from the last vertex position)
+
+Particle Index list:
+
+0 Ne18
+1 Na21
+2 proton
+3 alpha
+4 Li8
+5 B11
+6 neutron (athough the chances of neutron scattering are almost negligable)
+
+The simulation is only currently set up for a Ne18 or Li8 beam. To include different beam species the species should be added to the partilce index list in TACTICScorer.cc
+
+To run:
+
+npsimulation -D TACTIC.detector -E 18Ne21Na.reaction
+
+for batch mode edit run.mac and run: npsimulation -D TACTIC.detector -E 18Ne21Na.reaction -B run.mac
+
+TACTIC.detector is the detector config file, the gas can be changed here between He/CO2 and P10 and the pressure, temperature etc. can be changed. If using P10 set P10 gas fraction to 100 and set another gas fration (CO2 for example) to zero (i.e the code looks for two gases).
+
+18Ne21Na_reaction is the reaction file. The beam energy, spread, etc. can be changed here. Other reactions currently available are:
+
+18Ne4He_scat.reaction
+8Li11B.reaction
+8Li4He_scat.reaction
+
+Other reaction files can be created but the particles involved will need to be added to the particle index in TACTICScorer.cc .
+
+The reactions are currently isotropic in both angle and energy distribution. 
+
+IMPORTANT: The output will continue to append to out.dat so when starting a new run either delete or move the existing out.dat if you do not wish to append to the existing data file. 

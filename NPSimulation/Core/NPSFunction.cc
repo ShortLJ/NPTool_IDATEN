@@ -1,0 +1,12 @@
+#include"NPSFunction.hh"
+
+////////////////////////////////////////////////////////////////////////////////
+/*G4ThreeVector NPS::ConvertVector(TVector3 vec){
+  return G4ThreeVector(vec.X(),vec.Y(),vec.Z());
+  };
+////////////////////////////////////////////////////////////////////////////////
+TVector3 NPS::ConvertVector(G4ThreeVector vec){
+  return TVector3(vec.x(),vec.y(),vec.z());
+  };
+*/
+

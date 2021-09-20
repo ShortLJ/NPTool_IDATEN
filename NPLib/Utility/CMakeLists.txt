@@ -1,0 +1,11 @@
+add_executable(nptool-installer nptool-installer.cxx)
+target_link_libraries(nptool-installer ${ROOT_LIBRARIES} -lThread -lGraf -lHist -lMatrix NPCore) 
+add_executable(npanalysis npanalysis.cxx)
+target_link_libraries(npanalysis ${ROOT_LIBRARIES} -lThread -lGraf -lHist -lMatrix NPCore) 
+add_executable(nponline nponline.cxx)
+target_link_libraries(nponline ${ROOT_LIBRARIES} NPCore NPOnline) 
+add_executable(npspectra_test npspectra_test.cxx)
+target_link_libraries(npspectra_test ${ROOT_LIBRARIES} NPCore NPOnline) 
+
+install(PROGRAMS nptool-installer npanalysis nponline DESTINATION ${CMAKE_BINARY_OUTPUT_DIRECTORY})
+install(SCRIPT ${CMAKE_BINARY_DIR}/scripts/post_install.cmake ${DETLIST})
