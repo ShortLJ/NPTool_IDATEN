@@ -47,7 +47,7 @@ using namespace CLHEP;
 namespace TIGRESS{
   // Energy and time Resolution
   const G4double ResoTime    = 0      ;
-  const G4double ResoEnergy  = 0.035*MeV ;// = zzkeV of Resolution   //   Unit is MeV/2.35
+  const G4double ResoEnergy  = 0.0025*MeV ;// = zzkeV of Resolution   //   Unit is MeV/2.35
   const G4double EnergyThreshold = 0.4*MeV;
 }
 

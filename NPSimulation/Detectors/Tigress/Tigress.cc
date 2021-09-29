@@ -420,9 +420,10 @@ void Tigress::AddCloverStandard(vector<int> CloverId){
 
     else if(CloverId[i] == 5 ){
       m_CloverId.push_back(CloverId[i]);
-      m_R.push_back(145*mm);
+      m_R.push_back(120*mm); // IDATEN
+      //m_R.push_back(145*mm);
       m_Theta.push_back(90*deg);
-      m_Phi.push_back(22.5*deg);
+      m_Phi.push_back(0*deg);
       m_BetaX.push_back(0);
       m_BetaY.push_back(0);
       m_BetaZ.push_back(180*deg);
@@ -460,9 +461,10 @@ void Tigress::AddCloverStandard(vector<int> CloverId){
 
     else if(CloverId[i] == 9 ){
       m_CloverId.push_back(CloverId[i]);
-      m_R.push_back(145*mm);
+      m_R.push_back(120*mm); // IDATEN
+      //m_R.push_back(145*mm);
       m_Theta.push_back(90*deg);
-      m_Phi.push_back(202.5*deg);
+      m_Phi.push_back(180*deg);
       m_BetaX.push_back(0);
       m_BetaY.push_back(0);
       m_BetaZ.push_back(180*deg);
@@ -588,28 +590,37 @@ void Tigress::ReadSensitive(const G4Event* event){
   HPGEHitMap = (NPS::HitsMap<G4double*>*)(event->GetHCofThisEvent()->GetHC(HPGECollectionID));
 
   // Loop on the HPGE map
- /*	 for (HPGE_itr = HPGEHitMap->GetMap()->begin() ; HPGE_itr != HPGEHitMap->GetMap()->end() ; HPGE_itr++){
+	 for (HPGE_itr = HPGEHitMap->GetMap()->begin() ; HPGE_itr != HPGEHitMap->GetMap()->end() ; HPGE_itr++){
 
 		G4double* Info = *(HPGE_itr->second);
 
-		G4double Energy   =  Info[0]; // RandGauss::shoot(Info[0], ResoEnergy/2.334);
-		G4double Time     =  Info[1];
+		G4double Energy	  = RandGauss::shoot(Info[0], ResoEnergy/2.355);
+		//G4double Energy   =  Info[0]; // RandGauss::shoot(Info[0], ResoEnergy/2.334);
+		G4double Time     = Info[1];
 		G4int CloverNbr   = (int)Info[7];
 		G4int CrystalNbr  = (int)Info[8];
    
 		// Figure out segment number, in progress
-	G4int SegmentNbr = 0;
+		G4int SegmentNbr = 0;
 		G4double zpos = Info[4]; // mm
 		if(fabs(zpos) < 10)                         { SegmentNbr = 2; } // MIDDLE
 		else if(CrystalNbr == 1 || CrystalNbr == 4) { SegmentNbr = 1; } // RIGHT
 		else                                        { SegmentNbr = 3; } // LEFT
-	
-		//m_TigressData->SetCoreE(CloverNbr, CrystalNbr, Energy/keV);
-		//m_TigressData->SetCoreT(CloverNbr, CrystalNbr, Time/ns);
-		//m_TigressData->SetSegmentE(CloverNbr, SegmentNbr, Energy/keV);
-		//m_TigressData->SetSegmentT(CloverNbr, SegmentNbr, Time/keV);
+
+		if(Info[0]>0){
+			m_TigressData->SetGeCloverNbr(CloverNbr);
+			m_TigressData->SetGeCrystalNbr(CrystalNbr);
+			m_TigressData->SetGeSegmentNbr(SegmentNbr);
+			m_TigressData->SetGeEnergy(Energy);
+			m_TigressData->SetGeTimeCFD(Time);
+
+			//m_TigressData->SetCoreE(CloverNbr, CrystalNbr, Energy/keV);
+			//m_TigressData->SetCoreT(CloverNbr, CrystalNbr, Time/ns);
+			//m_TigressData->SetSegmentE(CloverNbr, SegmentNbr, Energy/keV);
+			//m_TigressData->SetSegmentT(CloverNbr, SegmentNbr, Time/keV);
+		}
   }
-*/	
+
   // clear map for next event
   HPGEHitMap->clear();
 }
