@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Sun Sep 19 03:58:49 2021 by ROOT version 6.24/02
+// Sat Oct  2 11:06:24 2021 by ROOT version 6.24/02
 // from TTree SimulatedTree/Data created / analysed with the nptool package
-// found on file: ../Outputs/Simulation/IDATEN05.root
+// found on file: ../Outputs/Simulation/IDATEN07.root
 //////////////////////////////////////////////////////////
 
 #ifndef SimTree_h
@@ -16,6 +16,7 @@
 #include "TInteractionCoordinates.h"
 #include "TFatimaData.h"
 #include "TKhalaData.h"
+#include "TTigressData.h"
 #include "TInitialConditions.h"
 #include "TTrackInfo.h"
 
@@ -30,6 +31,7 @@ public :
    TInteractionCoordinates *InteractionCoordinates;
    TFatimaData     *Fatima;
    TKhalaData      *Khala;
+   TTigressData    *Tigress;
    TInitialConditions *InitialConditions;
    TTrackInfo      *TrackInfo;
    Int_t           Run;
@@ -38,6 +40,7 @@ public :
    TBranch        *b_InteractionCoordinates;   //!
    TBranch        *b_Fatima;   //!
    TBranch        *b_Khala;   //!
+   TBranch        *b_Tigress;   //!
    TBranch        *b_InitialConditions;   //!
    TBranch        *b_TrackInfo;   //!
    TBranch        *b_Run;   //!
@@ -48,7 +51,7 @@ public :
    virtual Int_t    GetEntry(Long64_t entry);
    virtual Long64_t LoadTree(Long64_t entry);
    virtual void     Init(TTree *tree);
-  // virtual void     Loop();
+//   virtual void     Loop();
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
 };
@@ -61,9 +64,9 @@ SimTree::SimTree(TTree *tree, int ifile=0) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject(Form("/home/jlee/NPTools/NPTools_IDATEN/Outputs/Simulation/IDATEN%02d.root", ifile));
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject(Form("/home/jlee/NPTools/test/NPTool_IDATEN/Outputs/Simulation/IDATEN%02d.root", ifile));
       if (!f || !f->IsOpen()) {
-         f = new TFile(Form("/home/jlee/NPTools/NPTools_IDATEN/Outputs/Simulation/IDATEN%02d.root",ifile));
+         f = new TFile(Form("/home/jlee/NPTools/test/NPTool_IDATEN/Outputs/Simulation/IDATEN%02d.root",ifile));
       }
       f->GetObject("SimulatedTree",tree);
 
@@ -110,6 +113,7 @@ void SimTree::Init(TTree *tree)
    InteractionCoordinates = 0;
    Fatima = 0;
    Khala = 0;
+   Tigress = 0;
    InitialConditions = 0;
    TrackInfo = 0;
    // Set branch addresses and branch pointers
@@ -121,6 +125,7 @@ void SimTree::Init(TTree *tree)
    fChain->SetBranchAddress("InteractionCoordinates", &InteractionCoordinates, &b_InteractionCoordinates);
    fChain->SetBranchAddress("Fatima", &Fatima, &b_Fatima);
    fChain->SetBranchAddress("Khala", &Khala, &b_Khala);
+   fChain->SetBranchAddress("Tigress", &Tigress, &b_Tigress);
    fChain->SetBranchAddress("InitialConditions", &InitialConditions, &b_InitialConditions);
    fChain->SetBranchAddress("TrackInfo", &TrackInfo, &b_TrackInfo);
    fChain->SetBranchAddress("Run", &Run, &b_Run);
