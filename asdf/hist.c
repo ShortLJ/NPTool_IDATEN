@@ -2,7 +2,7 @@
 
 
 void hist(){
-	const int nfile= 3; const double div=100;
+	const int nfile=40; const double div=100;
 	int Entries[nfile]; int permille[nfile];
 	SimTree *tree[nfile];
 	TCanvas *c1[nfile];
@@ -23,6 +23,8 @@ void hist(){
 	TGraphErrors *gr_Teff = new TGraphErrors(); int igrT=0;
 	gr_Teff->SetName("gr_Teff");
 	gr_Teff->SetTitle("gr_Teff; Energy(keV); efficiency(%)");
+
+	TFile *output = new TFile("Hist_Eff.root", "recreate");
 
 
 	//for(int ifile=5; ifile<=8; ifile++){
@@ -123,6 +125,7 @@ void hist(){
 		gr_Teff->SetPoint(igrT++, f1_TE[ifile]->GetParameter(1), sqrt(2*TMath::Pi()) * f1_TE[ifile]->GetParameter(0)*f1_TE[ifile]->GetParameter(2)/10000000*100);
 
 
+		output->cd();	c1[ifile]->Write();
 
 	}
 
@@ -135,7 +138,8 @@ void hist(){
 	c2->cd(3);
 	gr_Teff->Draw("APL");
 
-
+	c2->Write();
+	output->Close();
 
 }
 
