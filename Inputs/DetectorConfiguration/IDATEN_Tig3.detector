@@ -1,0 +1,68 @@
+IDATEN
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Target
+ %THICKNESS= 3.2 micrometer
+ %ANGLE= 0 deg
+ %RADIUS=  12 mm
+ %MATERIAL= CD2
+ %X= 0 mm
+ %Y= 0 mm
+ %Z= 6.5 mm
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%GaspardTracker Square
+ %X1_Y1=     -40.5  -40.5   -8.5
+ %X128_Y1=    40.5  -40.5   -8.5
+ %X1_Y128=   -40.5   40.5   -8.5
+ %X128_Y128=  40.5   40.5   -8.5
+ %FIRSTSTAGE= 1
+ %SECONDSTAGE= 1
+ %THIRDSTAGE= 1
+ %VIS= all
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%             1
+%GaspardTracker Square 
+ %GaspardTracker Square 
+ %X1_Y1= 53.5 -52.319 0
+ %X128_Y1= 53.5 47.281 0
+ %X1_Y128= -58.5 -52.319 0
+ %X128_Y128= -58.5 47.281 -0
+ %FIRSTSTAGE= 1
+ %SECONDSTAGE= 1
+ %THIRDSTAGE= 1
+ %VIS= all
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Plastic
+ %X= 0 mm
+ %Y= 0 mm
+ %Z= -5 mm
+ %Thickness= 2 mm
+ %Shape= Square
+ %Height= 85 mm
+ %Width= 85 mm
+ %Radius= 0 mm
+ %Scintillator= Plastic_Scintillator
+ %LeadThickness= 0 mm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Plastic
+ %X= 0 mm
+ %Y= 0 mm
+ %Z= 5 mm
+ %Thickness= 2 mm
+ %Shape= Square
+ %Height= 85 mm
+ %Width= 85 mm
+ %Radius= 0 mm
+ %Scintillator= Plastic_Scintillator
+ %LeadThickness= 0 mm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         35
+Khala
+ Theta= 40 deg
+ Phi= 270 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+
+Tigress Standard
+  CloverId= 5 9
+
+

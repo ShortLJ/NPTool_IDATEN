@@ -1,0 +1,273 @@
+IDATEN
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Target
+ %THICKNESS= 3.2 micrometer
+ %ANGLE= 0 deg
+ %RADIUS=  12 mm
+ %MATERIAL= CD2
+ %X= 0 mm
+ %Y= 0 mm
+ %Z= 6.5 mm
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%GaspardTracker Square
+ %X1_Y1=     -40.5  -40.5   -8.5
+ %X128_Y1=    40.5  -40.5   -8.5
+ %X1_Y128=   -40.5   40.5   -8.5
+ %X128_Y128=  40.5   40.5   -8.5
+ %FIRSTSTAGE= 1
+ %SECONDSTAGE= 1
+ %THIRDSTAGE= 1
+ %VIS= all
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%             1
+%GaspardTracker Square 
+ %GaspardTracker Square 
+ %X1_Y1= 53.5 -52.319 0
+ %X128_Y1= 53.5 47.281 0
+ %X1_Y128= -58.5 -52.319 0
+ %X128_Y128= -58.5 47.281 -0
+ %FIRSTSTAGE= 1
+ %SECONDSTAGE= 1
+ %THIRDSTAGE= 1
+ %VIS= all
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Plastic
+ %X= 0 mm
+ %Y= 0 mm
+ %Z= -5 mm
+ %Thickness= 2 mm
+ %Shape= Square
+ %Height= 85 mm
+ %Width= 85 mm
+ %Radius= 0 mm
+ %Scintillator= Plastic_Scintillator
+ %LeadThickness= 0 mm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Plastic
+ %X= 0 mm
+ %Y= 0 mm
+ %Z= 5 mm
+ %Thickness= 2 mm
+ %Shape= Square
+ %Height= 85 mm
+ %Width= 85 mm
+ %Radius= 0 mm
+ %Scintillator= Plastic_Scintillator
+ %LeadThickness= 0 mm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         0
+Fatima
+ Theta= 120 deg
+ Phi= 10 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         1
+Fatima
+ Theta= 120 deg
+ Phi= 50 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         2
+Fatima
+ Theta= 120 deg
+ Phi= 90 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         3
+Fatima
+ Theta= 120 deg
+ Phi= 130 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         4
+Fatima
+ Theta= 120 deg
+ Phi= 170 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         5
+Fatima
+ Theta= 120 deg
+ Phi= 210 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         6
+Fatima
+ Theta= 120 deg
+ Phi= 250 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         7
+Fatima
+ Theta= 120 deg
+ Phi= 290 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         8
+Fatima
+ Theta= 120 deg
+ Phi= 330 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         9
+Fatima
+ Theta= 100 deg
+ Phi= 30 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         10
+Fatima
+ Theta= 100 deg
+ Phi= 70 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         11
+Fatima
+ Theta= 100 deg
+ Phi= 110 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         12
+Fatima
+ Theta= 100 deg
+ Phi= 150 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         13
+Fatima
+ Theta= 100 deg
+ Phi= 230 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         14
+Fatima
+ Theta= 100 deg
+ Phi= 270 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         15
+Fatima
+ Theta= 100 deg
+ Phi= 310 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         16
+Fatima
+ Theta= 80 deg
+ Phi= 50 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         17
+Fatima
+ Theta= 80 deg
+ Phi= 90 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         18
+Fatima
+ Theta= 80 deg
+ Phi= 130 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         19
+Fatima
+ Theta= 80 deg
+ Phi= 210 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         20
+Fatima
+ Theta= 80 deg
+ Phi= 250 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         21
+Fatima
+ Theta= 80 deg
+ Phi= 290 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         22
+Fatima
+ Theta= 80 deg
+ Phi= 330 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         23
+Fatima
+ Theta= 60 deg
+ Phi= 30 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         24
+Fatima
+ Theta= 60 deg
+ Phi= 70 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         25
+Fatima
+ Theta= 60 deg
+ Phi= 110 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         26
+Fatima
+ Theta= 60 deg
+ Phi= 150 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         27
+Fatima
+ Theta= 60 deg
+ Phi= 190 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         28
+Fatima
+ Theta= 60 deg
+ Phi= 230 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         29
+Fatima
+ Theta= 60 deg
+ Phi= 270 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         30
+Fatima
+ Theta= 60 deg
+ Phi= 310 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         31
+Fatima
+ Theta= 60 deg
+ Phi= 350 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         32
+Fatima
+ Theta= 40 deg
+ Phi= 0 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         33
+Fatima
+ Theta= 40 deg
+ Phi= 90 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         34
+Fatima
+ Theta= 40 deg
+ Phi= 180 deg
+ R= 170mm 
+ Beta= 0 0 0 deg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         35
+
+Tigress Standard
+  CloverId= 5 9
+
+
