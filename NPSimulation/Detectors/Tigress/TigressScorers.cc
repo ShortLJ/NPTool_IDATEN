@@ -15,12 +15,14 @@ using namespace TIGRESSSCORERS;
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-PS_Tigress::PS_Tigress(G4String name,G4int ,G4int depth)
+PS_Tigress::PS_Tigress(G4String name,G4int Level ,G4int depth)
   :G4VPrimitiveScorer(name, depth),HCID(-1){
 	m_Position = G4ThreeVector(-1000,-1000,-1000);
 	m_CloverNumber  = -1;
 	m_CrystalNumber = -1;
 	m_Index = -1 ;
+cout << "" << endl;
+cout << "Level " << Level << endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -35,6 +37,8 @@ G4bool PS_Tigress::ProcessHits(G4Step* aStep, G4TouchableHistory*){
   Infos[1] = aStep->GetPreStepPoint()->GetGlobalTime();
 
   m_CrystalNumber = aStep->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber(m_Level);
+cout << "m_Level " << m_Level << endl;
+cout << "aStep->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber(m_Level) " << aStep->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber(m_Level) << endl;
   m_Position  = aStep->GetPreStepPoint()->GetPosition();
 
   // Interaction coordinates (used to fill the InteractionCoordinates branch)
@@ -44,15 +48,20 @@ G4bool PS_Tigress::ProcessHits(G4Step* aStep, G4TouchableHistory*){
   Infos[5] = m_Position.theta();
   Infos[6] = m_Position.phi();
 
-	// Find Clover with Closest central phi angle
-	G4double phiDeg = Infos[6]*180/CLHEP::pi;
-	G4double distance[4] = { fabs(phiDeg - 45) , fabs(phiDeg - 135) , fabs(phiDeg - -135) , fabs(phiDeg - -45) };
-	m_CloverNumber = std::min_element(distance, distance+4) - distance + 1;
-	
-	Infos[7] = m_CloverNumber;
+  // Find Clover with Closest central phi angle
+  //G4double phiDeg = Infos[6]*180/CLHEP::pi;
+  //G4double distance[4] = { fabs(phiDeg - 45) , fabs(phiDeg - 135) , fabs(phiDeg - -135) , fabs(phiDeg - -45) };
+  //m_CloverNumber = std::min_element(distance, distance+4) - distance + 1;
+  if(m_Position.x()<0) m_CloverNumber=1;
+  if(m_Position.x()>0) m_CloverNumber=2;
+cout << "" << endl;
+cout << "m_Position.x() " << m_Position.x() << endl;
+cout << "m_CloverNumber " << m_CloverNumber << endl;
+
+  Infos[7] = m_CloverNumber;
   Infos[8] = m_CrystalNumber;
 
-	m_Index = m_CloverNumber * 1 + m_CrystalNumber * 1e3;
+  m_Index = m_CloverNumber * 1 + m_CrystalNumber * 1e3;
 
   // Sum up all hits in the SAME CORE AND CLOVER
   map<G4int, G4double**>::iterator it;

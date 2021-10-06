@@ -41,6 +41,9 @@ private:
   vector<Double_t> fTIG_Ge_TimeCFD;
   vector<Double_t> fTIG_Ge_TimeLED;
 
+  vector<UShort_t> fTIG_Ge_CloverNbrAddback;
+  vector<Double_t> fTIG_Ge_EnergyAddback;
+
   vector<UShort_t> fTIG_BGO_CloverNbr;
   vector<UShort_t> fTIG_BGO_CrystalNbr;
   vector<UShort_t> fTIG_BGO_PmNbr;
@@ -64,6 +67,9 @@ public:
   inline void SetGeEnergy(const Double_t &GeEnergy){fTIG_Ge_Energy.push_back(GeEnergy);}
   inline void SetGeTimeCFD(const Double_t &GeTimeCFD){fTIG_Ge_TimeCFD.push_back(GeTimeCFD);}
   inline void SetGeTimeLED(const Double_t &GeTimeLED){fTIG_Ge_TimeLED.push_back(GeTimeLED);}
+
+  inline void SetGeCloverNbrAddback(const UShort_t &GeCloverNbrAddback){fTIG_Ge_CloverNbrAddback.push_back(GeCloverNbrAddback); }
+  inline void SetGeEnergyAddback(const Double_t &GeEnergyAddback){fTIG_Ge_Energy.push_back(GeEnergyAddback);}
 
   inline void SetBGOCloverNbr(const UShort_t &BGOCloverNbr){fTIG_BGO_CloverNbr.push_back(BGOCloverNbr); }
   inline void SetBGOCrystalNbr(const UShort_t &BGOCrystalNbr){fTIG_BGO_CrystalNbr.push_back(BGOCrystalNbr);}
@@ -89,6 +95,7 @@ public:
   inline Double_t GetBGOTimeLED(const unsigned int &i)     {return fTIG_BGO_TimeLED[i];}
 
   inline unsigned int GetMultiplicityGe()  {return fTIG_Ge_CloverNbr.size();}
+  inline unsigned int GetMultiplicityGeAddback()  {return fTIG_Ge_CloverNbrAddback.size();}
   inline unsigned int GetMultiplicityBGO()  {return fTIG_BGO_CloverNbr.size();}
   
   ClassDef(TTigressData,1)  // TigressData structure

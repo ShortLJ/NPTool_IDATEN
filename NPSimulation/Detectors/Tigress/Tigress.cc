@@ -609,9 +609,11 @@ void Tigress::ReadSensitive(const G4Event* event){
 
 		if(Info[0]>0){
 			m_TigressData->SetGeCloverNbr(CloverNbr);
+cout << "SetGeCloverNbr(CloverNbr); " << CloverNbr << endl;
 			m_TigressData->SetGeCrystalNbr(CrystalNbr);
 			m_TigressData->SetGeSegmentNbr(SegmentNbr);
 			m_TigressData->SetGeEnergy(Energy);
+cout << "m_TigressData->SetGeEnergy(Energy); " << Energy << endl;
 			m_TigressData->SetGeTimeCFD(Time);
 
 			//m_TigressData->SetCoreE(CloverNbr, CrystalNbr, Energy/keV);

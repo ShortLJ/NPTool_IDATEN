@@ -45,6 +45,9 @@ void TTigressData::Clear(){
   fTIG_Ge_TimeCFD.clear();
   fTIG_Ge_TimeLED.clear();
 
+  fTIG_Ge_CloverNbrAddback.clear();
+  fTIG_Ge_EnergyAddback.clear();
+
   fTIG_BGO_CloverNbr.clear();
   fTIG_BGO_CrystalNbr.clear();
   fTIG_BGO_PmNbr.clear();
