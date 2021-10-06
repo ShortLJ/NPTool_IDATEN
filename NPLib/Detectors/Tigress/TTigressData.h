@@ -89,6 +89,9 @@ public:
   inline Double_t GetGeTimeCFD(const unsigned int &i)     {return fTIG_Ge_TimeCFD[i];}
   inline Double_t GetGeTimeLED(const unsigned int &i)     {return fTIG_Ge_TimeLED[i];}
 
+  inline UShort_t GetGeCloverNbrAddback(const unsigned int &i)   {return fTIG_Ge_CloverNbrAddback[i]; }
+  inline Double_t GetGeEnergyAddback(const unsigned int &i)      {return fTIG_Ge_EnergyAddback[i];}
+
   inline UShort_t GetBGOCloverNbr(const unsigned int &i)   {return fTIG_BGO_CloverNbr[i]; }
   inline UShort_t GetBGOCrystalNbr(const unsigned int &i)  {return fTIG_BGO_CrystalNbr[i]; }
   inline UShort_t GetBGOPmNbr(const unsigned int &i)       {return fTIG_BGO_PmNbr[i]; }

@@ -9,10 +9,12 @@ void hist(){
 	TH1D *h1_KE[nfile];
 	TH1D *h1_FE[nfile];
 	TH1D *h1_TE[nfile];
+	TH1D *h1_TAE[nfile];
 
 	TF1 *f1_KE[nfile];
 	TF1 *f1_FE[nfile];
 	TF1 *f1_TE[nfile];
+	TF1 *f1_TAE[nfile];
 
 	TGraphErrors *gr_Keff = new TGraphErrors(); int igrK=0;
 	gr_Keff->SetName("gr_Keff");
@@ -23,6 +25,10 @@ void hist(){
 	TGraphErrors *gr_Teff = new TGraphErrors(); int igrT=0;
 	gr_Teff->SetName("gr_Teff");
 	gr_Teff->SetTitle("gr_Teff; Energy(keV); efficiency(%)");
+	TGraphErrors *gr_TAeff = new TGraphErrors(); int igrTA=0;
+	gr_TAeff->SetName("gr_TAeff");
+	gr_TAeff->SetTitle("gr_TAeff; Energy(keV); efficiency(%)");
+
 
 	TFile *output = new TFile("Hist_Eff.root", "recreate");
 
@@ -33,6 +39,7 @@ void hist(){
 		h1_KE[ifile] = new TH1D(Form("h1_KE%.0fkeV", div*ifile),Form("h1_KE%.0fkeV;Energy(keV)", div*ifile),4500,0,4500);
 		h1_FE[ifile] = new TH1D(Form("h1_FE%.0fkeV", div*ifile),Form("h1_FE%.0fkeV;Energy(keV)", div*ifile),4500,0,4500);
 		h1_TE[ifile] = new TH1D(Form("h1_TE%.0fkeV", div*ifile),Form("h1_TE%.0fkeV;Energy(keV)", div*ifile),4500,0,4500);
+		h1_TAE[ifile] = new TH1D(Form("h1_TAE%.0fkeV", div*ifile),Form("h1_TAE%.0fkeV;Energy(keV)", div*ifile),4500,0,4500);
 
 		tree[ifile] = new SimTree(0,ifile);
 		Entries[ifile]=tree[ifile]->fChain->GetEntries();
@@ -51,11 +58,14 @@ void hist(){
 			for(int ibr=0; ibr<tree[ifile]->Tigress->GetMultiplicityGe(); ibr++){
 				h1_TE[ifile]->Fill(tree[ifile]->Tigress->GetGeEnergy(ibr)*1000);
 			}
+			for(int ibr=0; ibr<tree[ifile]->Tigress->GetMultiplicityGeAddback(); ibr++){
+				h1_TAE[ifile]->Fill(tree[ifile]->Tigress->GetGeEnergyAddback(ibr)*1000);
+			}
 		}
 		tree[ifile]->~SimTree();
 		printf("\n");
 
-		c1[ifile]->Divide(3,1);
+		c1[ifile]->Divide(4,1);
 
 		c1[ifile]->cd(1);
 		h1_KE[ifile]->Draw();
@@ -77,7 +87,7 @@ void hist(){
 		f1_KE[ifile]->SetRange(div*ifile-3*f1_KE[ifile]->GetParameter(2), div*ifile+3*f1_KE[ifile]->GetParameter(2));
 		h1_KE[ifile]->Fit(f1_KE[ifile], "R");
 
-		gr_Keff->SetPoint(igrK++, f1_KE[ifile]->GetParameter(1), sqrt(2*TMath::Pi()) * f1_KE[ifile]->GetParameter(0)*f1_KE[ifile]->GetParameter(2)/10000000*100);
+		gr_Keff->SetPoint(igrK++, f1_KE[ifile]->GetParameter(1), sqrt(2*TMath::Pi()) * f1_KE[ifile]->GetParameter(0)*f1_KE[ifile]->GetParameter(2)/1000000*100);
 
 
 		c1[ifile]->cd(2);
@@ -100,7 +110,7 @@ void hist(){
 		f1_FE[ifile]->SetRange(div*ifile-3*f1_FE[ifile]->GetParameter(2), div*ifile+3*f1_FE[ifile]->GetParameter(2));
 		h1_FE[ifile]->Fit(f1_FE[ifile], "R");
 
-		gr_Feff->SetPoint(igrF++, f1_FE[ifile]->GetParameter(1), sqrt(2*TMath::Pi()) * f1_FE[ifile]->GetParameter(0)*f1_FE[ifile]->GetParameter(2)/10000000*100);
+		gr_Feff->SetPoint(igrF++, f1_FE[ifile]->GetParameter(1), sqrt(2*TMath::Pi()) * f1_FE[ifile]->GetParameter(0)*f1_FE[ifile]->GetParameter(2)/1000000*100);
 
 		c1[ifile]->cd(3);
 		h1_TE[ifile]->Draw();
@@ -122,7 +132,30 @@ void hist(){
 		f1_TE[ifile]->SetRange(div*ifile-3*f1_TE[ifile]->GetParameter(2), div*ifile+3*f1_TE[ifile]->GetParameter(2));
 		h1_TE[ifile]->Fit(f1_TE[ifile], "R");
 
-		gr_Teff->SetPoint(igrT++, f1_TE[ifile]->GetParameter(1), sqrt(2*TMath::Pi()) * f1_TE[ifile]->GetParameter(0)*f1_TE[ifile]->GetParameter(2)/10000000*100);
+		gr_Teff->SetPoint(igrT++, f1_TE[ifile]->GetParameter(1), sqrt(2*TMath::Pi()) * f1_TE[ifile]->GetParameter(0)*f1_TE[ifile]->GetParameter(2)/1000000*100);
+
+		c1[ifile]->cd(4);
+		h1_TAE[ifile]->Draw("SAME PLC");
+		f1_TAE[ifile] = new TF1(Form("f1_TAE%.0fkeV", div*ifile), "gaus(0) + [0]*[3]*(0.5-0.5*erf((x-[1])/[2]/TMath::Sqrt(2.))) + [4]*(x-[1])+[5]", div*ifile-3*3, div*ifile+3*3);
+		f1_TAE[ifile]->SetParameter(0,8000/ifile);
+		f1_TAE[ifile]->SetParameter(1,div*ifile);
+		f1_TAE[ifile]->SetParameter(2,3);
+		f1_TAE[ifile]->SetParameter(3,0);
+		f1_TAE[ifile]->SetParameter(4,0);
+		f1_TAE[ifile]->SetParameter(5,0);
+		f1_TAE[ifile]->SetParLimits(0,0,1000000);
+		f1_TAE[ifile]->SetParLimits(1,div*ifile-3*f1_TAE[ifile]->GetParameter(2), div*ifile+3*f1_TAE[ifile]->GetParameter(2));
+		f1_TAE[ifile]->SetParLimits(2,0,50);
+		f1_TAE[ifile]->SetParLimits(3,0,1);
+		//f1_TAE[ifile]->SetParLimits(4,0,1);
+		f1_TAE[ifile]->SetParLimits(5,0,1000000);
+		f1_TAE[ifile]->SetRange(div*ifile-3*f1_TAE[ifile]->GetParameter(2), div*ifile+3*f1_TAE[ifile]->GetParameter(2));
+		h1_TAE[ifile]->Fit(f1_TAE[ifile], "RQ");
+		f1_TAE[ifile]->SetRange(div*ifile-3*f1_TAE[ifile]->GetParameter(2), div*ifile+3*f1_TAE[ifile]->GetParameter(2));
+		h1_TAE[ifile]->Fit(f1_TAE[ifile], "R");
+
+
+		gr_TAeff->SetPoint(igrTA++, f1_TAE[ifile]->GetParameter(1), sqrt(2*TMath::Pi()) * f1_TAE[ifile]->GetParameter(0)*f1_TAE[ifile]->GetParameter(2)/1000000*100);
 
 
 		output->cd();	c1[ifile]->Write();
@@ -130,13 +163,15 @@ void hist(){
 	}
 
 	TCanvas *c2 = new TCanvas("c_eff","c_eff", 1800,600);
-	c2->Divide(3,1);
+	c2->Divide(4,1);
 	c2->cd(1);
 	gr_Keff->Draw("APL");
 	c2->cd(2);
 	gr_Feff->Draw("APL");
 	c2->cd(3);
 	gr_Teff->Draw("APL");
+	c2->cd(4);
+	gr_TAeff->Draw("APL");
 
 	c2->Write();
 	output->Close();
