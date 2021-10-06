@@ -21,8 +21,8 @@ PS_Tigress::PS_Tigress(G4String name,G4int Level ,G4int depth)
 	m_CloverNumber  = -1;
 	m_CrystalNumber = -1;
 	m_Index = -1 ;
-cout << "" << endl;
-cout << "Level " << Level << endl;
+//cout << "" << endl;
+//cout << "Level " << Level << endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -37,8 +37,8 @@ G4bool PS_Tigress::ProcessHits(G4Step* aStep, G4TouchableHistory*){
   Infos[1] = aStep->GetPreStepPoint()->GetGlobalTime();
 
   m_CrystalNumber = aStep->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber(m_Level);
-cout << "m_Level " << m_Level << endl;
-cout << "aStep->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber(m_Level) " << aStep->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber(m_Level) << endl;
+//cout << "m_Level " << m_Level << endl;
+//cout << "aStep->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber(m_Level) " << aStep->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber(m_Level) << endl;
   m_Position  = aStep->GetPreStepPoint()->GetPosition();
 
   // Interaction coordinates (used to fill the InteractionCoordinates branch)
@@ -54,9 +54,9 @@ cout << "aStep->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber(m_Level) 
   //m_CloverNumber = std::min_element(distance, distance+4) - distance + 1;
   if(m_Position.x()<0) m_CloverNumber=1;
   if(m_Position.x()>0) m_CloverNumber=2;
-cout << "" << endl;
-cout << "m_Position.x() " << m_Position.x() << endl;
-cout << "m_CloverNumber " << m_CloverNumber << endl;
+//cout << "" << endl;
+//cout << "m_Position.x() " << m_Position.x() << endl;
+//cout << "m_CloverNumber " << m_CloverNumber << endl;
 
   Infos[7] = m_CloverNumber;
   Infos[8] = m_CrystalNumber;
