@@ -76,22 +76,6 @@ void TTigressData::Addback(){
 
 	if(fTIG_Ge_CloverNbr.size() == 0) return;
 
-/*	vector<UShort_t>::iterator iit;
-	vector<UShort_t>::iterator jit;
-	for(iit = fTIG_Ge_CloverNbr.begin(); iit != fTIG_Ge_CloverNbr.end();iit++){
-		bool iflag=true;
-		for(jit = fTIG_Ge_CloverNbrAddback.begin(); jit != fTIG_Ge_CloverNbrAddback.end();jit++){
-			if(*iit==*jit){
-				fTIG_Ge_EnergyAddback[j]+=fTIG_Ge_Energy[i];
-				iflag=false; break;
-			}
-		}
-		if(iflag){
-			fTIG_Ge_CloverNbrAddback.push_back(fTIG_Ge_CloverNbr[i]);
-			fTIG_Ge_EnergyAddback.push_back(fTIG_Ge_Energy[i]);
-		}
-	}
-*/
 	for(unsigned int i=0; i<fTIG_Ge_CloverNbr.size(); i++){
 		bool iflag=true;
 		for(unsigned int j=0; j<fTIG_Ge_CloverNbrAddback.size(); j++){
