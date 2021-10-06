@@ -595,7 +595,7 @@ void Tigress::ReadSensitive(const G4Event* event){
 		G4double* Info = *(HPGE_itr->second);
 
 		G4double Energy	  = RandGauss::shoot(Info[0], ResoEnergy/2.355);
-		//G4double Energy   =  Info[0]; // RandGauss::shoot(Info[0], ResoEnergy/2.334);
+		//G4double Energy   =  Info[0];
 		G4double Time     = Info[1];
 		G4int CloverNbr   = (int)Info[7];
 		G4int CrystalNbr  = (int)Info[8];
@@ -609,19 +609,14 @@ void Tigress::ReadSensitive(const G4Event* event){
 
 		if(Info[0]>0){
 			m_TigressData->SetGeCloverNbr(CloverNbr);
-//cout << "SetGeCloverNbr(CloverNbr); " << CloverNbr << endl;
 			m_TigressData->SetGeCrystalNbr(CrystalNbr);
 			m_TigressData->SetGeSegmentNbr(SegmentNbr);
 			m_TigressData->SetGeEnergy(Energy);
-//cout << "m_TigressData->SetGeEnergy(Energy); " << Energy << endl;
 			m_TigressData->SetGeTimeCFD(Time);
-
-			//m_TigressData->SetCoreE(CloverNbr, CrystalNbr, Energy/keV);
-			//m_TigressData->SetCoreT(CloverNbr, CrystalNbr, Time/ns);
-			//m_TigressData->SetSegmentE(CloverNbr, SegmentNbr, Energy/keV);
-			//m_TigressData->SetSegmentT(CloverNbr, SegmentNbr, Time/keV);
 		}
   }
+  m_TigressData->Addback();
+
 
   // clear map for next event
   HPGEHitMap->clear();

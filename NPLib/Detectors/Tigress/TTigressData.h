@@ -59,7 +59,9 @@ public:
   void Clear();
   void Clear(const Option_t*) {};
   void Dump() const;
-  
+
+  void Addback();
+ 
   /////////////////////           SETTERS           ////////////////////////
   inline void SetGeCloverNbr(const UShort_t &GeCloverNbr){fTIG_Ge_CloverNbr.push_back(GeCloverNbr); }
   inline void SetGeCrystalNbr(const UShort_t &GeCrystalNbr){fTIG_Ge_CrystalNbr.push_back(GeCrystalNbr);}
