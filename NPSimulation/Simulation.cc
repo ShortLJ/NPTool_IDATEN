@@ -100,10 +100,15 @@ int main(int argc, char** argv){
     ///////////////////////////////////////////////////////////////
     // interactive mode : define UI session
     // Get the pointer to the User Interface manager
-    G4cout << "//////////// Starting UI ////////////"<< endl;
+    G4UIExecutive* ui=NULL;
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
-    G4UIExecutive* ui = new G4UIExecutive(argc, argv);
-    
+    if(!OptionManager->GetG4BatchMode()){
+	G4cout << "//////////// Starting UI ////////////"<< endl;
+	ui = new G4UIExecutive(argc, argv);
+    }
+    else{
+	G4cout << "//////// Starting without UI ////////"<< endl;
+    }
     
     ///////////////////////////////////////////////////////////////
     ////////////////////// Reading Reaction ///////////////////////
