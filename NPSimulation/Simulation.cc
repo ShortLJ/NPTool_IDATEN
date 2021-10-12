@@ -107,7 +107,7 @@ int main(int argc, char** argv){
 	ui = new G4UIExecutive(argc, argv);
     }
     else{
-	G4cout << "//////// Starting without UI ////////"<< endl;
+	G4cout << "/////// Starting in batch mode //////"<< endl;
     }
     
     ///////////////////////////////////////////////////////////////
